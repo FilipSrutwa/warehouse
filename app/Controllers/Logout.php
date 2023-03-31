@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class Logout extends BaseController
 {
-    public function index()
+    public function getIndex()
     {
         return redirect()->to('/Login');
     }
