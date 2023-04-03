@@ -31,6 +31,6 @@
         </table>
     </div>
 
-    <button class="btn btn-lg btn-primary">Dodaj pracownika</button>
+    <a href="/ManageContractors/addContractor" class="btn btn-lg btn-primary">Dodaj dostawcę</a>
 </div>
 <?= $this->endSection() ?>

@@ -36,6 +36,6 @@
             </tr>
         </tbody>
     </table>
-    <button class="btn btn-lg btn-primary">Dodaj sprzedaż</button>
+    <a href="/SalesHistory/AddSale" class="btn btn-lg btn-primary">Dodaj sprzedaż</a>
 </div>
 <?= $this->endSection() ?>

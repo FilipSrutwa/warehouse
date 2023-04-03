@@ -8,4 +8,8 @@ class SalesHistory extends BaseController
     {
         return view('salesHistory');
     }
+    public function getAddSale()
+    {
+        return view('addSale');
+    }
 }

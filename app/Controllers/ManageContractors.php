@@ -8,4 +8,8 @@ class ManageContractors extends BaseController
     {
         return view('manageContractors');
     }
+    public function getAddContractor()
+    {
+        return view('addContractor');
+    }
 }

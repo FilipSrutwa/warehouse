@@ -8,4 +8,8 @@ class ManageAccounts extends BaseController
     {
         return view('manageAccounts');
     }
+    public function getAddEmployee()
+    {
+        return view('addEmployee');
+    }
 }

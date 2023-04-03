@@ -32,6 +32,6 @@
             </tr>
         </tbody>
     </table>
-    <button class="btn btn-lg btn-primary">Dodaj pracownika</button>
+    <a href="/ManageAccounts/addEmployee" class="btn btn-lg btn-primary">Dodaj pracownika</a>
 </div>
 <?= $this->endSection() ?>
