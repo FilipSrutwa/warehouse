@@ -31,7 +31,7 @@ if (session_status() === PHP_SESSION_NONE)
                     <a class="nav-link" href="/ManageContractors">Zarządzaj dostawcami</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="SalesHistory">Historia sprzedaży</a>
+                    <a class="nav-link" href="/SalesHistory">Historia sprzedaży</a>
                 </li>';
             </ul>
             <ul class="navbar-nav ">
