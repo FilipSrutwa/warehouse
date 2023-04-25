@@ -12,24 +12,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>pracownik1</td>
-                <td>Otto</td>
-                <td>Kowalski</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>pracownik2</td>
-                <td>Thornton</td>
-                <td>Smith</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>pracownik3</td>
-                <td>Adam</td>
-                <td>Wiśniewski</td>
-            </tr>
+            <?php
+            $i = 1;
+            foreach ($foundAccounts as $acc) {
+                echo '
+                <tr>
+                    <th scope="row">' . $i . '</th>
+                    <td>' . $acc['Login'] . '</td>
+                    <td>' . $acc['Name'] . '</td>
+                    <td>' . $acc['Surname'] . '</td>
+                </tr>
+                ';
+                $i++;
+            }
+            ?>
         </tbody>
     </table>
     <a href="/ManageAccounts/addEmployee" class="btn btn-lg btn-primary">Dodaj pracownika</a>
