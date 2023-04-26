@@ -1,6 +1,11 @@
 <?= $this->extend('layouts/topBottom') ?>
 <?= $this->section('content') ?>
-
+<script>
+    function showContractor(contractorID) {
+        const path = `/ManageContractors/Contractor/${contractorID}`;
+        window.location.assign(path);
+    }
+</script>
 <div class="container-fluid">
     <div>
         <table class="table table-hover mt-5">
@@ -12,21 +17,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>firma1</td>
-                    <td>31.05.2001</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>firma2</td>
-                    <td>20.01.1997</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>firma3</td>
-                    <td>15.03.2015</td>
-                </tr>
+                <?php
+                $i = 1;
+                foreach ($foundContractors as $contractor) {
+                    echo '
+                    <tr  onclick=showContractor(' . $contractor['ID'] . ')>
+                        <th scope="row">' . $i . '</th>
+                        <td>' . $contractor['Name'] . '</td>
+                        <td>' . $contractor['Created_at'] . '</td>
+                    </tr>
+                    ';
+                    $i++;
+                }
+
+                ?>
             </tbody>
         </table>
     </div>

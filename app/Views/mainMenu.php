@@ -37,7 +37,7 @@
     <div class="card mr-2" style="width: 19rem; height:32rem;">
         <img class="card-img-top" src="/assets/pics/History.png" alt="Card image cap">
         <div class="card-body d-flex align-items-center flex-column">
-            <h5 class="card-title text-center">Historia sprzedaży</h5>
+            <h5 class="card-title text-center">Zarządzaj sprzedażą</h5>
             <p class="card-text text-center">Przeglądanie historii oraz szczegółów dot. sprzedaży</p>
             <a href="/SalesHistory" class="btn btn-primary mt-auto">Przejdź do strony</a>
         </div>
