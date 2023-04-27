@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-class WarehouseHistory extends BaseController
+class Deliveries extends BaseController
 {
     public function getIndex()
     {
-        return view('warehouseHistory');
+        return view('deliveries');
     }
     public function getAddGoodsIssue()
     {

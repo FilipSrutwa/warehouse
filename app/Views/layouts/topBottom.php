@@ -25,7 +25,7 @@ if (session_status() === PHP_SESSION_NONE)
                     <a class="nav-link" href="/ManageAccounts">Zarządzaj kontami</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/WarehouseHistory">Zarządzanie przyjęciami/wydaniami</a>
+                    <a class="nav-link" href="/Deliveries">Zarządzanie przyjęciami/wydaniami</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ManageContractors">Zarządzaj dostawcami</a>

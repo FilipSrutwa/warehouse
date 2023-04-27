@@ -6,7 +6,7 @@
         <img class="card-img-top" src="/assets/pics/Items.png" alt="Card image cap">
         <div class="card-body d-flex align-items-center flex-column">
             <h5 class="card-title text-center">Obsługa stanu magazynowego</h5>
-            <p class="card-text text-center">Przeglądanie stanu magazynowego oraz korekta stanu.</p>
+            <p class="card-text text-center">Zarządzanie przedmiotami na magazynie, przeglądanie stanu magazynowego oraz korekta stanu.</p>
             <a href="/ManageItems" class="btn btn-primary mt-auto">Przejdź do strony</a>
         </div>
     </div>

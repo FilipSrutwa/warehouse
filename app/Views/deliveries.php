@@ -3,8 +3,8 @@
 
 <div class="container-fluid">
     <div class="mt-5">
-        <a href="/WarehouseHistory/AddGoodsIssue" class="btn btn-lg btn-primary mr-3">Dodaj wydanie</a>
-        <a href="/WarehouseHistory/AddGoodsDelivery" class="btn btn-lg btn-primary">Dodaj przyjęcie</a>
+        <a href="/Deliveries/AddGoodsIssue" class="btn btn-lg btn-primary mr-3">Dodaj wydanie</a>
+        <a href="/Deliveries/AddGoodsDelivery" class="btn btn-lg btn-primary">Dodaj przyjęcie</a>
     </div>
 
     <table class="table table-hover mt-5">
