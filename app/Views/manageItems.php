@@ -6,9 +6,18 @@
         window.location.assign(path);
     }
 </script>
+<script src="/scripts/tableSearch.js"></script>
 <div class="container-fluid">
     <a href="/ManageItems/addItem" class="btn btn-lg btn-primary mt-3">Dodaj nowy przedmiot</a>
-    <table class="table table-hover mt-5">
+
+    <div class="input-group mt-5">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">&#128269;</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" id="myInput" onkeyup="filter()" placeholder="Wyszukaj frazę">
+    </div>
+
+    <table class="table table-hover mt-1" id="myTable">
         <thead>
             <tr>
                 <th scope="col">#</th>
