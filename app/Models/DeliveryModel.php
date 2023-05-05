@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class WarehouseItem extends Model
+class DeliveryModel extends Model
 {
-    protected $table      = 'warehouse_items';
+    protected $table      = 'deliveries';
     protected $primaryKey = 'ID';
 
     protected $useAutoIncrement = true;
@@ -14,7 +14,7 @@ class WarehouseItem extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['ID', 'Item_ID', 'Alley_ID', 'Amount', 'Delivery_ID'];
+    protected $allowedFields = ['ID', 'Item', 'Amount', 'Created_at'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'Created_at';

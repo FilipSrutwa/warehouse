@@ -9,23 +9,25 @@
                 <select class="form-control" id="item" name="item">
                     <?php
                     foreach ($foundItems as $item) {
-                        echo '
+                        if ($item['ID'] == $foundDelivery['Item'])
+                            echo '
+                        <option selected value=' . $item['ID'] . '>' . $item['Name'] . '; EAN: ' . $item['EAN'] . '; Dostawca: ' . $item['Contractor'] . '</option>
+                        ';
+                        else
+                            echo '
                         <option value=' . $item['ID'] . '>' . $item['Name'] . '; EAN: ' . $item['EAN'] . '; Dostawca: ' . $item['Contractor'] . '</option>
                         ';
                     }
                     ?>
                 </select>
             </div>
-            <div class="border p-3">
-                <p>Brak towaru? Dodaj nowy przy użyciu przycisku poniżej</p>
-                <a href="/ManageItems/addItem" class="btn btn-sm btn-success">Dodaj towar</a>
-            </div>
             <div class="form-group">
                 <label for="amount">Ilość</label>
-                <input type="number" class="form-control" id="amount" name="amount">
+                <input type="number" class="form-control" id="amount" name="amount" value=<?= $foundDelivery['Amount'] ?>>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg">Dodaj</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-success">Zatwierdź zmiany</button>
+            <a href="/Deliveries" class="btn btn-primary btn-lg btn-warning">Wyjdź bez zmian</a>
         </form>
     </div>
 

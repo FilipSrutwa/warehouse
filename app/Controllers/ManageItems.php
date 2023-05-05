@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AlleyModel;
 use App\Models\CategoryModel;
 use App\Models\ContractorModel;
 use App\Models\ItemModel;
@@ -66,7 +67,23 @@ class ManageItems extends BaseController
         ];
         return view('editItem', $data);
     }
-
+    public function getEditAlley($warehouseItemID)
+    {
+        $data = [
+            'foundWarehouseItem' => $this->grabWarehouseItem($warehouseItemID),
+            'foundAlleys' => $this->grabAlleys(),
+        ];
+        return view('editAlley', $data);
+    }
+    public function postEditAlley($warehouseItemID)
+    {
+        $dataToUpdate = [
+            'Alley_ID' => $_POST['alley'],
+        ];
+        $warehouseItemModel = new WarehouseItem();
+        $warehouseItemModel->update($warehouseItemID, $dataToUpdate);
+        return redirect()->to(site_url() . '/ManageItems');
+    }
     public function postEditItem($itemID)
     {
         $dataToUpdate = [
@@ -80,6 +97,20 @@ class ManageItems extends BaseController
         $itemModel = new ItemModel();
         $itemModel->update($itemID, $dataToUpdate);
         return redirect()->to(site_url() . '/ManageItems/ManageItem/' . $itemID);
+    }
+
+
+    private function grabWarehouseItem($warehouseItemID)
+    {
+        $warehouseItemModel = new WarehouseItem();
+
+        return $warehouseItemModel->find($warehouseItemID);
+    }
+    private function grabAlleys()
+    {
+        $alleyModel = new AlleyModel();
+
+        return $alleyModel->findAll();
     }
     private function grabContractors()
     {
@@ -121,8 +152,8 @@ class ManageItems extends BaseController
     private function grabWarehouseData($itemID)
     {
         $db = \Config\Database::connect();
-        $query = $db->query("SELECT warehouse_alleys.Name AS AlleyName, Amount, Updated_at AS UpdatedAt FROM warehouse_items INNER JOIN warehouse_alleys ON Alley_ID = warehouse_alleys.ID WHERE Item_ID = $itemID;");
-        $results = $query->getRowArray();
+        $query = $db->query("SELECT warehouse_alleys.Name AS AlleyName, Amount, Updated_at,warehouse_items.ID AS ID FROM warehouse_items INNER JOIN warehouse_alleys ON Alley_ID = warehouse_alleys.ID WHERE Item_ID = $itemID AND warehouse_items.Deleted_at IS NULL ORDER BY Updated_at;");
+        $results = $query->getResultArray();
 
         return $results;
     }

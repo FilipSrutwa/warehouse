@@ -11,13 +11,48 @@
             <h2><b>Sugerowana cena sprzedaży</b>: <?= $foundItem['SellingPrice'] ?></h2>
             <h2><b>Kategoria</b>: <?= $foundItem['Category'] ?></h2>
             <h2><b>Utworzono dnia</b>: <?= $foundItem['CreatedAt'] ?></h2>
-            <h2><b>Ostatnia dostawa</b>: <?= (isset($foundWarehouseData['UpdatedAt']) ? $foundWarehouseData['UpdatedAt'] : "Nie odbyła się jeszcze") ?></h2>
-            <h2><b>Dostępna ilość</b>: <?= (isset($foundWarehouseData['Amount']) ? $foundWarehouseData['Amount'] : 0) ?></h2>
-            <h2><b>Alejka</b>: <?= (isset($foundWarehouseData['AlleyName']) ? $foundWarehouseData['AlleyName'] : "Oczekuje na przeniesienie") ?></h2>
+            <h2><b>Ostatnia dostawa</b>:
+                <?php
+                if (isset($foundWarehouseData) && $foundWarehouseData != null) {
+                    $date = $foundWarehouseData[count($foundWarehouseData) - 1];
+                    echo ($date['Updated_at']);
+                } else {
+                    echo 'Brak dostawy';
+                }
+                ?>
+            </h2>
+
+            <h2><b>Dostępna ilość</b>:
+                <?php
+                if (isset($foundWarehouseData) && $foundWarehouseData != null) {
+                    $amount = 0;
+                    foreach ($foundWarehouseData as $data) {
+                        $amount += $data['Amount'];
+                    }
+                    echo $amount;
+                } else {
+                    echo 'Brak na magazynie';
+                }
+                ?></h2>
+            </h2>
+
+            <h2><b>Alejka</b>:
+                <?php
+                if (isset($foundWarehouseData) && $foundWarehouseData != null) {
+                    foreach ($foundWarehouseData as $data) {
+                        echo '<ul>' . $data['AlleyName'] . '- ' . $data['Amount'] . 'szt. 
+                            <a href=/ManageItems/EditAlley/' . $data['ID'] . ' class="btn btn-sm btn-warning">Przenieś do innej alejki</a>
+                        </ul>';
+                    }
+                } else {
+                    echo 'Brak na magazynie';
+                }
+                ?>
+            </h2>
         </span>
         <a href="/ManageItems/EditItem/<?= $foundItem['ID'] ?>" class="btn btn-primary btn-lg mt-2" style="width:fit-content !important;">Edytuj przedmiot</a>
         <?php
-        if (!isset($foundWarehouseData) || $foundWarehouseData['Amount'] == 0)
+        if (!isset($foundWarehouseData) || $foundWarehouseData == null)
             echo '
                 <button class="btn btn-danger btn-lg mt-2" data-toggle="modal" data-target="#exampleModal" style="width:fit-content !important;">Usuń przedmiot</button>
             ';

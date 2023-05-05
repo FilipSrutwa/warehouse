@@ -23,7 +23,7 @@
         <div class="card-body d-flex align-items-center flex-column">
             <h5 class="card-title text-center">Zarządzanie przyjęciami/wydaniami</h5>
             <p class="card-text text-center">Przeglądanie przyjęć/wydań oraz ich szczegółów</p>
-            <a href="/WarehouseHistory" class="btn btn-primary mt-auto">Przejdź do strony</a>
+            <a href="/Deliveries" class="btn btn-primary mt-auto">Przejdź do strony</a>
         </div>
     </div>
     <div class="card mr-2" style="width: 19rem; height:32rem;">
