@@ -25,6 +25,7 @@ class Login extends BaseController
             if (session_status() == PHP_SESSION_NONE)
                 session_start();
             $_SESSION['accType'] = $foundLogin['Acc_type'];
+            $_SESSION['empID'] = $foundLogin['ID'];
             return redirect()->to(site_url() . '/MainMenu');
         }
     }

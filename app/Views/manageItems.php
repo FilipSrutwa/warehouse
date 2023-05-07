@@ -14,10 +14,10 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">&#128269;</span>
         </div>
-        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" id="myInput" onkeyup="filter()" placeholder="Wyszukaj frazę">
+        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" id="search" onkeyup="searchTable()" placeholder="Wyszukaj nazwę przedmiotu">
     </div>
 
-    <table class="table table-hover mt-1" id="myTable">
+    <table class="table table-hover mt-1" id="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
