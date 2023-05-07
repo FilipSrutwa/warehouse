@@ -24,7 +24,6 @@
                 <th scope="col">Imię i nazwisko pracownika</th>
                 <th scope="col">Identyfikator koszyka</th>
                 <th scope="col">Data sprzedaży</th>
-                <th scope="col">#</th>
             </tr>
         </thead>
         <tbody>
