@@ -45,15 +45,15 @@
         </tbody>
     </table>
     <div class="mt-2">
-        <a href="/Orders/FinishOrder/#" class="btn btn-lg btn-success">Odebrano zamówienie</a>
-        <a href="/Orders/AddToOrder/#" class="btn btn-lg btn-primary">Dodaj nowy przedmiot do zamówienia</a>
-        <a href="/Orders/DropOrder/#" class="btn btn-lg btn-danger">Skasuj zamówienie</a>
+        <a href="/Orders/FinishOrder/<?= $orderID ?>" class="btn btn-lg btn-success">Odebrano zamówienie</a>
+        <a href="/Orders/AddToOrder/<?= $orderID ?>" class="btn btn-lg btn-primary">Dodaj nowy przedmiot do zamówienia</a>
+        <a href="/Orders/DropOrder/<?= $orderID ?>" class="btn btn-lg btn-danger">Skasuj zamówienie</a>
     </div>
     <div class="mt-3">
         <h1>Podsumowanie</h1>
         <h2 id="price">Cena: <?= $totalPrice ?></h2>
-        <h2>Data odbioru: <?= $_GET['collectionDate'] ?></h2>
-        <h2>Osoba odbierająca: <?= $_GET['buyer'] ?></h2>
+        <h2>Data odbioru: <?= $collectionDate ?></h2>
+        <h2>Osoba odbierająca: <?= $buyer['Name'] ?></h2>
     </div>
 </div>
 <?= $this->endSection() ?>

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BuyerModel;
 use App\Models\OrderItemsModel;
 use App\Models\OrderModel;
+use App\Models\WarehouseItem;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -23,6 +24,8 @@ class Orders extends BaseController
             'foundOrderData' => $this->grabOrderData($orderID),
             'orderID' => $orderID,
             'totalPrice' => $this->grabTotalPrice($orderID),
+            'buyer' => $this->grabOrdersBuyer($orderID),
+            'collectionDate' => $this->grabOrderCollectionDate($orderID),
         ];
         return view('order', $data);
     }
@@ -46,6 +49,48 @@ class Orders extends BaseController
         $orderModel->insert($dataToSave);
 
         return redirect()->to(site_url() . '/Orders/Order/' . $orderModel->getInsertID());
+    }
+    public function getAddToOrder($orderID)
+    {
+        $data = [
+            'foundItems' => $this->grabMerchandise(),
+            'foundBuyer' => $this->grabOrdersBuyer($orderID),
+        ];
+        return view('addToOrder', $data);
+    }
+    public function postAddToOrder($orderID)
+    {
+        //aktualizacja stanu magazynowego w zadanym ID
+        $warehouseItem = new WarehouseItem();
+        $foundWarehouseItem = $warehouseItem->find($_POST['warehouseItemID']);
+        $newAmountInMagazine = $foundWarehouseItem['Amount'] - $_POST['amount'];
+        $dataToUpdateWarehouseItem = ['Amount' => $newAmountInMagazine];
+        $warehouseItem->update($_POST['warehouseItemID'], $dataToUpdateWarehouseItem);
+
+        $dataToInsert = [
+            'Order_ID' => $orderID,
+            'Warehouse_item_ID' => $_POST['warehouseItemID'],
+            'Amount' => $_POST['amount'],
+            'Sell_price' => $_POST['amount'] * $_POST['price'],
+        ];
+        $orderItemsModel = new OrderItemsModel();
+        $orderItemsModel->insert($dataToInsert);
+
+        return redirect()->to(site_url() . '/Orders/Order/' . $orderID);
+    }
+    private function grabMerchandise()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT warehouse_items.ID AS ID, items_dictionary.Name AS Name, warehouse_alleys.Name AS Alley, warehouse_items.Amount AS Amount, items_dictionary.Selling_price AS Price 
+        FROM warehouse_items INNER JOIN warehouse_alleys ON Alley_ID = warehouse_alleys.ID 
+        INNER JOIN items_dictionary ON Item_ID = items_dictionary.ID 
+        WHERE warehouse_items.Deleted_at IS NULL AND warehouse_items.Amount > 0
+        ORDER BY items_dictionary.Name
+        ;
+        ");
+        $results = $query->getResultArray();
+
+        return $results;
     }
     private function grabOrders()
     {
@@ -75,6 +120,13 @@ class Orders extends BaseController
 
         return $results;
     }
+    private function grabOrderCollectionDate($orderID)
+    {
+        $orderModel = new OrderModel();
+        $foundOrder = $orderModel->find($orderID);
+
+        return $foundOrder['Collection_date'];
+    }
     private function grabTotalPrice($orderID)
     {
         $orderItemsModel = new OrderItemsModel();
@@ -91,5 +143,13 @@ class Orders extends BaseController
     {
         $buyerModel = new BuyerModel();
         return $buyerModel->findAll();
+    }
+    private function grabOrdersBuyer($orderID)
+    {
+        $buyerModel = new BuyerModel();
+        $orderModel = new OrderModel();
+        $foundOrder = $orderModel->find($orderID);
+
+        return $buyerModel->find($foundOrder['Buyer_ID']);
     }
 }

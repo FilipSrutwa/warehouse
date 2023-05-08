@@ -14,7 +14,7 @@
 
 <script>
     function showOrder(orderID, buyer, collectionDate) {
-        const path = "/Orders/Order/" + orderID + "?buyer=" + buyer + "&collectionDate=" + collectionDate;
+        const path = "/Orders/Order/" + orderID;
         window.location.assign(path);
     }
 </script>

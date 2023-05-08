@@ -14,7 +14,7 @@ class OrderItemsModel extends Model
     protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['ID', 'Order_ID', 'Item_ID', 'Amount', 'Sell_price'];
+    protected $allowedFields = ['ID', 'Order_ID', 'Warehouse_item_ID', 'Amount', 'Sell_price'];
 
     //protected $useTimestamps = true;
     //protected $createdField  = 'Created_at';
