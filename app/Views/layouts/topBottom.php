@@ -32,7 +32,10 @@ if (session_status() === PHP_SESSION_NONE)
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Sales">Zarządzaj sprzedażą</a>
-                </li>';
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Orders">Zarządzaj zamówieniami</a>
+                </li>
             </ul>
             <ul class="navbar-nav ">
                 <li class="nav-item">
