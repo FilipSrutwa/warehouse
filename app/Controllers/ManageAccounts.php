@@ -54,7 +54,7 @@ class ManageAccounts extends BaseController
     {
         $dataToSave = [
             'Login' => $_POST['login'],
-            'Password' => $_POST['password'],
+            'Password' => $this->hash_password($_POST['password']),
             'Name' => $_POST['name'],
             'Surname' => $_POST['surname'],
             'Acc_type' => $_POST['accType'],
@@ -65,12 +65,11 @@ class ManageAccounts extends BaseController
 
         return redirect()->to(site_url() . '/ManageAccounts/Account/' . $accID);
     }
-
     public function postAddEmployee()
     {
         $dataToSave = [
             'Login' => $_POST['login'],
-            'Password' => $_POST['password'],
+            'Password' => $this->hash_password($_POST['password']),
             'Name' => $_POST['name'],
             'Surname' => $_POST['surname'],
             'Acc_type' => $_POST['accType'],
@@ -79,6 +78,11 @@ class ManageAccounts extends BaseController
         $accModel->save($dataToSave);
 
         return redirect()->to(site_url() . '/ManageAccounts');
+    }
+
+    private function hash_password($password)
+    {
+        return password_hash($password, PASSWORD_BCRYPT);
     }
 
     private function grabAccounts()
