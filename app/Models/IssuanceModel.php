@@ -14,7 +14,7 @@ class IssuanceModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['ID', 'Item', 'Amount', 'Created_at'];
+    protected $allowedFields = ['ID', 'Item', 'Amount', 'Created_at', 'Created_by'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'Created_at';

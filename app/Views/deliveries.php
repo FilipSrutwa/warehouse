@@ -37,6 +37,22 @@
                 ';
                 $i++;
             }
+            foreach ($foundIssuances as $issuance) {
+                echo '
+                <tr>
+                    <th scope="row">' . $i . '</th>
+                    <td>' . $issuance['Name'] . '</td>
+                    <td>' . $issuance['Amount'] . '</td>
+                    <td>Wydano</td>
+                    <td>' . $issuance['Created_at'] . '</td>
+                    <td>
+                        <a href="/Deliveries/editIssuance/' . $issuance['ID'] . '" class="btn btn-sm btn-warning">Edytuj</a>
+                        <a href="/Deliveries/dropIssuance/' . $issuance['ID'] . '" class="btn btn-sm btn-danger">Usuń</a>
+                    </td>
+                </tr>
+                ';
+                $i++;
+            }
             ?>
 
         </tbody>

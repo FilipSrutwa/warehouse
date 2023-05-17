@@ -1,22 +1,35 @@
 <?= $this->extend('layouts/topBottom') ?>
 <?= $this->section('content') ?>
+<script>
+    function getMax() {
+        var sel = document.getElementById("warehouseItemID");
+        var text = sel.options[sel.selectedIndex].text;
 
+        const myRegex = new RegExp('\\d+$');
+        const myInt = text.match(myRegex);
+
+        var amount = document.getElementById("Amount").max = myInt;
+    }
+</script>
 <div class="container">
     <div>
-        <form action="POST">
+        <form method="POST">
             <div class="form-group">
-                <label for="name">Nazwa towaru</label>
-                <select class="form-control" id="name">
-                    <option>Towar 1</option>
-                    <option>Towar 2</option>
-                    <option>Towar 3</option>
-                    <option>Towar 4</option>
-                    <option>Towar 5</option>
+                <label for="warehouseItemID">Nazwa towaru</label>
+                <select class="form-control" id="warehouseItemID" onchange="getMax()" name="warehouseItemID" required>
+                    <option disabled selected value> -- Wybierz towar -- </option>
+                    <?php
+                    foreach ($foundItems as $item) {
+                        echo '
+                    <option value=' . $item['ID'] . '>' . $item['Name'] . '; Alejka: ' . $item['Alley'] . '; Ilość: ' . $item['Amount'] . '</option>
+                    ';
+                    }
+                    ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="Amount">Ilość</label>
-                <input type="number" class="form-control" id="Amount">
+                <input type="number" class="form-control" id="Amount" name="Amount">
             </div>
             <button type="submit" class="btn btn-primary">Dodaj</button>
         </form>
