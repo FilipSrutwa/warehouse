@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\BuyerModel;
+use App\Models\ItemModel;
 use App\Models\SaleModel;
 use App\Models\WarehouseItem;
 
@@ -29,24 +30,33 @@ class Sales extends BaseController
             session_start();
         $date = date("d-m-Y h:i:s");
 
-        //aktualizacja stanu magazynowego w zadanym ID
         $warehouseItem = new WarehouseItem();
-        $foundWarehouseItem = $warehouseItem->find($_POST['warehouseItemID']);
-        $newAmountInMagazine = $foundWarehouseItem['Amount'] - $_POST['amount'];
-        $dataToUpdateWarehouseItem = ['Amount' => $newAmountInMagazine];
-        $warehouseItem->update($_POST['warehouseItemID'], $dataToUpdateWarehouseItem);
 
-        $itemID = $foundWarehouseItem['Item_ID'];
-        $dataForSaleModel = [
-            'Item_ID' => $itemID,
-            'Amount' => $_POST['amount'],
-            'Sell_price' => $_POST['price'] * $_POST['amount'],
-            'Buyer_ID' => $_POST['buyer'],
-            'Employee_ID' => $_SESSION['empID'],
-            'Bag_ID' => $_SESSION['empID'] . '-' . $date,
-        ];
-        $saleModel = new SaleModel();
-        $saleModel->insert($dataForSaleModel);
+        foreach ($_POST['warehouseItemID'] as $key => $value) {
+            print("WarehouseItemID: " . $value . ' ');
+            print($_POST['amount'][$key] . ' ');
+        }
+        foreach ($_POST['warehouseItemID'] as $key => $value) {
+            $foundWarehouseItem = $warehouseItem->find($value);
+            $itemModel = new ItemModel();
+            $foundItem = $itemModel->find($foundWarehouseItem['Item_ID']);
+            $price = $foundItem['Selling_price'];
+            $newAmountInMagazine = $foundWarehouseItem['Amount'] - $_POST['amount'][$key];
+            $dataToUpdateWarehouseItem = ['Amount' => $newAmountInMagazine];
+            $warehouseItem->update($value, $dataToUpdateWarehouseItem);
+
+            $itemID = $foundWarehouseItem['Item_ID'];
+            $dataForSaleModel = [
+                'Item_ID' => $itemID,
+                'Amount' => $_POST['amount'][$key],
+                'Sell_price' => $price * $_POST['amount'][$key],
+                'Buyer_ID' => $_POST['buyer'],
+                'Employee_ID' => $_SESSION['empID'],
+                'Bag_ID' => $_SESSION['empID'] . '-' . $date,
+            ];
+            $saleModel = new SaleModel();
+            $saleModel->insert($dataForSaleModel);
+        }
 
         return redirect()->to(site_url() . '/Sales');
     }
