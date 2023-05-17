@@ -34,8 +34,8 @@
                     <td>' . $data['Amount'] . '</td>
                     <td>' . $data['Price'] . '</td>
                     <td>
-                        <a href="/Orders/ChangeItemAmountInOrder/' . $orderID . '?warehouseItemID=' . $data['Warehouse_item_ID'] . '" class="btn btn-sm btn-warning">Zmień ilość</a>
-                        <a href="/Orders/DropItemFromOrder/' . $orderID . '?warehouseItemID=' . $data['Warehouse_item_ID'] . '" class="btn btn-sm btn-danger">Usuń przedmiot z zamówienia</a>
+                        <a href="/Orders/ChangeAmountInOrder/' . $orderID . '?orderItemID=' . $data['ID'] . '" class="btn btn-sm btn-warning">Zmień ilość</a>
+                        <a href="/Orders/DropItemFromOrder/' . $orderID . '?orderItemID=' . $data['ID'] . '" class="btn btn-sm btn-danger">Usuń przedmiot z zamówienia</a>
                     </td>
                 </tr>
                 ';

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\BuyerModel;
+use App\Models\ItemModel;
 use App\Models\OrderItemsModel;
 use App\Models\OrderModel;
 use App\Models\WarehouseItem;
@@ -77,6 +78,106 @@ class Orders extends BaseController
         $orderItemsModel->insert($dataToInsert);
 
         return redirect()->to(site_url() . '/Orders/Order/' . $orderID);
+    }
+    public function getDropItemFromOrder($orderID)
+    {
+        //wyszukanie potrzebnych wierszy z bazy danych
+        $orderItemModel = new OrderItemsModel();
+        $warehouseItemModel = new WarehouseItem();
+        $foundOrderItem = $orderItemModel->find($_GET['orderItemID']);
+        $foundWarehouseItem = $warehouseItemModel->find($foundOrderItem['Warehouse_item_ID']);
+
+        //inkrementacja stanu magazynowego o ilosc z zamowienia
+        $amount = $foundWarehouseItem['Amount'];
+        $amount += $foundOrderItem['Amount'];
+        $foundWarehouseItem['Amount'] = $amount;
+        $warehouseItemModel->save($foundWarehouseItem);
+
+        //usuniecie z zamowienia
+        $orderItemModel->delete($_GET['orderItemID']);
+
+        return redirect()->to(site_url() . '/Orders/Order/' . $orderID);
+    }
+    public function getChangeAmountInOrder($orderID)
+    {
+        $data = [
+            'foundWarehouseItem' => $this->grabWarehouseItem($orderID),
+            'foundOrderItem' => $this->grabOrderItem(),
+            'foundItem' => $this->grabItem(),
+        ];
+
+        return view('changeAmountInOrder', $data);
+    }
+    public function postChangeAmountInOrder($orderID)
+    {
+        $dataToUpdate = [
+            'Amount' => $_POST['amount'],
+            'Sell_price' => $_POST['amount'] * $_POST['suggestedUnitPrice'],
+        ];
+
+        //zmiana ilosci na magazynie
+        $orderItemModel = new OrderItemsModel();
+        $warehouseItemModel = new WarehouseItem();
+        $foundOrderItem = $orderItemModel->find($_GET['orderItemID']);
+        $foundWarehouseItem = $warehouseItemModel->find($foundOrderItem['Warehouse_item_ID']);
+        //inkrementacja stanu magazynowego o ilosc z zamowienia i obnizenie o nowa wartosc
+        $amount = $foundWarehouseItem['Amount'];
+        $amount += $foundOrderItem['Amount'];
+        $amount -= $_POST['amount'];
+        $foundWarehouseItem['Amount'] = $amount;
+        $warehouseItemModel->save($foundWarehouseItem);
+
+        $orderItemModel->update($_GET['orderItemID'], $dataToUpdate);
+
+        return redirect()->to(site_url() . '/Orders/Order/' . $orderID);
+    }
+    public function getDropOrder($orderID)
+    {
+        $orderModel = new OrderModel();
+        $foundOrder = $orderModel->find($orderID);
+
+        $warehouseItemModel = new WarehouseItem();
+
+        $orderItemsModel = new OrderItemsModel();
+        $foundOrderItems = $orderItemsModel->where('Order_ID', $orderID)->find();
+
+        //aktualizacja stanow magazynowych
+        foreach ($foundOrderItems as $orderItem) {
+            $foundWarehouseItem = $warehouseItemModel->find($orderItem['Warehouse_item_ID']);
+            $amount = $orderItem['Amount'] + $foundWarehouseItem['Amount'];
+            $data = ['Amount' => $amount];
+            $warehouseItemModel->update($orderItem['Warehouse_item_ID'], $data);
+        }
+
+        //usuniecie elementow zamowienia i samego zamowienia
+        $orderItemsModel->where('Order_ID', $orderID)->delete();
+        $orderModel->delete($orderID);
+
+        return redirect()->to(site_url() . '/Orders');
+    }
+
+    private function grabItem() //requires $_GET with warehouseItemID
+    {
+        $warehouseItemModel = new WarehouseItem();
+        $orderItemModel = new OrderItemsModel();
+        $foundOrderItemModel = $orderItemModel->find($_GET['orderItemID']);
+        $foundWarehouseItem = $warehouseItemModel->find($foundOrderItemModel['Warehouse_item_ID']);
+
+        $itemModel = new ItemModel();
+        return $itemModel->find($foundWarehouseItem['Item_ID']);
+    }
+    private function grabWarehouseItem() //requires $_GET with warehouseItemID
+    {
+        $warehouseItemModel = new WarehouseItem();
+        $orderItemModel = new OrderItemsModel();
+        $foundOrderItemModel = $orderItemModel->find($_GET['orderItemID']);
+
+        return $warehouseItemModel->find($foundOrderItemModel['Warehouse_item_ID']);
+    }
+    private function grabOrderItem() //requires $_GET with warehouseItemID
+    {
+        $orderItemModel = new OrderItemsModel();
+        return $orderItemModel->find($_GET['orderItemID']);
     }
     private function grabMerchandise()
     {
