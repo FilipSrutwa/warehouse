@@ -12,20 +12,6 @@
         <a href="/ManageContractors/EditContractor/<?= $foundContractor['ID'] ?>" class="btn btn-primary btn-lg mt-2" style="width:fit-content !important;">Edytuj dostawcę</a>
         <button class="btn btn-danger btn-lg mt-2" data-toggle="modal" data-target="#exampleModal" style="width:fit-content !important;">Usuń dostawcę</button>
     </div>
-    <div class="ml-5">
-        <table class="table table-hover mt-5">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Data dostawy</th>
-                    <th scope="col">Przedmiot dostawy</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--TUTAJ TRZEBA DODAĆ POBIERANIE DOSTAW Z BAZY DANYCH!!! -->
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <!-- Modal -->
